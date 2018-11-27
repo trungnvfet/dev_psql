@@ -10,8 +10,6 @@ opts = [
                help='postgres account')
 ]
 
-params = CONF.db_connection
-
 
 def register_opts(conf):
     conf.register_opts(opts)
@@ -32,6 +30,7 @@ def create_tables():
         """)]
     conn = None
     try:
+        params = CONF.db_connection
         conn = postgre_connection(params)
         cur = conn.cursor()
         for command in commands:
@@ -53,6 +52,7 @@ def update_tables(name, id):
     conn = None
     updated_rows = 0
     try:
+        params = CONF.db_connection
         conn = postgre_connection(params)
         cur = conn.cursor()
         cur.execute(sql, (name, id))
@@ -74,6 +74,7 @@ def insert_tables(name):
     sql2 = "INSERT INTO vendors(name) VALUES(%s)"
     conn = None
     try:
+        params = CONF.db_connection
         conn = postgre_connection(params)
         cur = conn.cursor()
         if name is list:
